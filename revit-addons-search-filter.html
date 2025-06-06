@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Library</title>
+    <style>
+    /* Importing Raleway font */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.tool-library {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    background-color: white;
+    padding: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 15px; /* Adds space between the filters */
+    flex-wrap: nowrap; /* Prevents wrapping */
+    justify-content: space-between; /* Distributes space between filters */
+    width: 100%;
+    max-width: 1200px; /* Adjust as needed to fit your layout */
+    margin-bottom: 20px;
+}
+
+.filter-box {
+    flex: 1; /* Allows filters to grow and shrink as needed */
+    min-width: 150px; /* Ensures a minimum width for each filter box */
+}
+
+.filter-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.filters select {
+    width: 100%;
+    padding: 10px;
+    padding-right: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.tool-card {
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    border: 1px solid #F5F5F5;
+    border-radius: 10px;
+    margin-bottom: 15px; /* Space between cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+}
+
+.card-header {
+    padding: 20px;
+    position: relative;
+}
+
+.tool-name {
+    color: #00A3AD;
+    font-weight: bold;
+    margin: 0;
+    font-size: 18px; /* Increase the font size */
+    text-align: left;
+}
+
+.tool-name a {
+    text-decoration: none;
+    color: #00A3AD;
+    font-size: 18px; /* Match the font size of .tool-name */
+}
+
+/* Hover effect only for linked titles */
+.tool-name a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tool-description {
+    margin: 10px 0 0; /* Ensure it is below the title */
+    color: #333;
+    font-weight: 400;
+    text-align: left;
+    font-size: 14px;
+}
+
+.chevron {
+    font-size: 12px; /* Adjusted size for better visibility */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer; /* Pointer cursor for the dropdown arrow */
+    transition: transform 0.3s ease;
+    transform: scaleX(1.75);
+    color: black;
+}
+
+.tool-card.active .card-body {
+    display: block; /* Show content when active */
+}
+
+.tool-card.active .chevron {
+    transform: scaleX(1.5) rotate(180deg); /* Rotate arrow when active */
+}
+
+.card-body {
+    display: none; /* Hidden by default */
+    padding: 20px;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+}
+
+.card-body p {
+    margin: 5px 0;
+    color: #000;
+}
+
+.card-body strong {
+    font-weight: 600;
+    color: #000;
+}
+
+.option-item {
+    margin-bottom: 5px; /* Adjust this value to control the spacing */
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.searchBar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 1200px;
+    width: 100%;
+}
+
+#searchBar {
+    padding: 10px;
+    font-size: 16px;
+    flex-grow: 1;
+    padding-right: 40px; /* Space for the clear button */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    color: #333;
+}
+
+#searchBar:-webkit-autofill {
+    color: #333 !important; /* Text color */
+    background-color: #fff !important; /* Background color */
+}
+
+/* Style for focus state */
+#searchBar:focus {
+    border-color: #66afe9; /* Border color when focused (adjust if needed) */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Optional: add subtle shadow for focus effect */
+}
+
+#clearSearchButton {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 5px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: white;
+    color: gray;
+    border: none;
+    border-radius: 5px;
+}
+
+#searchButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #00A3AD;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#searchButton:hover {
+    background-color: #88DBDF;
+}
+
+.tool-card .card-body,
+.tool-card {
+    cursor: auto; /* Default cursor for non-interactive areas */
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="tool-library">
+<div class="search-box">
+    <div class="searchBar-container">
+        <input type="text" id="searchBar" placeholder="Search by name or keyword..." />
+        <button id="clearSearchButton">x</button>
+    </div>
+    <button id="searchButton">Search</button>
+</div>
+    <div class="filters">
+        <div class="filter-box">
+            <div class="filter-title">Install Type</div>
+            <select id="installTypeFilter">
+                <option value=""></option>
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="filter-box">
+            <div class="filter-title">Where to Get</div>
+            <select id="wheretogetTypeFilter">
+                <option value=""></option>
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="filter-box">
+            <div class="filter-title">Managed By</div>
+            <select id="managedByFilter">
+                <option value=""></option>
+                <!-- Add options here -->
+            </select>
+        </div>
+      <!--  <div class="filter-box">
+            <div class="filter-title">Tool Type</div>
+            <select id="toolTypeFilter">
+                <option value=""></option>
+            </select>
+        </div> -->
+    </div>
+
+    <!-- Beacon -->
+    <div class="tool-card active" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/core-app-dev/beacon2" target="_blank">Beacon</a><p class="tool-description">Embodied Carbon material and system takeoffs from Revit, automated submission to SE2050 database</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 1.1.1</p>
+        </div>
+    </div>
+
+    <!-- BlueBeam -->
+    <div class="tool-card" data-tool-type="" data-install-type="Automatic" data-where-type="Installs w/ BlueBeam" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">BlueBeam<p class="tool-description">An exporter for Bluebeam PDF</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Automatic</div>
+            <div class="option-item"><strong>Where to Get:</strong> Installs w/ BlueBeam</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 20.3.15.27</p>
+        </div>
+    </div>
+
+    <!-- CORE Column Design -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/column-design-app" target="_blank">CORE Column Design</a><p class="tool-description">A tool for column design</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 0.11.0</p>
+        </div>
+    </div>
+
+    <!-- CORE Revit Toolbox -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/core-app-dev/revit-toolbox" target="_blank">CORE Revit Toolbox</a><p class="tool-description">Buttons for common tasks and batch editing parameters or sheets within Revit</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 6.3.0</p>
+        </div>
+    </div>
+    
+    <!-- CORE Secure -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/ls/content/5310421001043968/kb-revit-getting-started-creating-threats-and-running-analysis" target="_blank">CORE Secure</a><p class="tool-description">A tool for secure modeling</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 6.1.0</p>
+        </div>
+    </div>
+    
+    <!-- DiRootsOne -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/core-design-dirootsones-revit-plugin" target="_blank">DiRootsOne</a><p class="tool-description">A bundle of 8 free Autodesk Revit Plugins to boost productivity, including features like exporting model data to Excel/Google Sheets, managing families and worksets, and importing spreadsheets into Revit</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 1.9.0</p>
+        </div>
+    </div>
+ 
+     <!-- DiRoots Prosheets -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">DiRoots Prosheets<p class="tool-description">A tool for managing drawing sheets and revisions</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 1.3.3</p>
+        </div>
+    </div>
+    
+    <!-- Ellipse -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://www.ellipse.studio/" target="_blank">Ellipse</a><p class="tool-description">Link to 3D model or analysis in one dashboard for optioneering and interactive presentations, or link tabular data to 3D space for more efficient understanding and querying of model data</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 0.4.0</p>
+        </div>
+    </div>
+    
+    <!-- Guardian -->
+    <div class="tool-card" data-tool-type="" data-install-type="Automatic" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/introducing-guardian" target="_blank">Guardian</a><p class="tool-description">A tool for managing Revit standards and content</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Automatic</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 3.1.9</p>
+        </div>
+    </div>
+    
+    <!-- Ideate -->
+    <div class="tool-card" data-tool-type="" data-install-type="Automatic" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/revit-ideate-tools-introduction" target="_blank">Ideate</a><p class="tool-description">A productivity toolbar with tools like Explorer, BIMLink, Sticky, StyleManager, and IdeateApps for various Revit tasks</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Automatic</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 2022-2025</p>
+        </div>
+    </div>
+    
+    <!-- IrisVR Prospect -->
+    <div class="tool-card" style="background-color: #F3F3F3;" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/irisvr-prospect" target="_blank">IrisVR Prospect (Being Depreciated Soon)</a><p class="tool-description">A VR tool for immersive design reviews</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 2.13.5</p>
+        </div>
+    </div>
+    
+    <!-- Konstru -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="CORE Drop" data-managed-by="CORE app dev">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/konstru" target="_blank">Konstru</a><p class="tool-description">Translate models or partial models from any software to another. Add analysis info to production models. Cross-platform data management over the lifetime of a project</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5406106295730176/departments/core-studio-1/core-app-dev/drop" target="_blank">CORE Drop</a></div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/4715257919438848/core-app-dev" target="_blank">CORE app dev</a></div>
+            <p><strong>Version:</strong> 1.0.4</p>
+        </div>
+    </div>
+    
+    <!-- Navis File Exporter -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">Navis File Exporter<p class="tool-description">A tool for exporting files to Navisworks</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 19.2.138337</p>
+        </div>
+    </div>
+    
+    <!-- Orkestra -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">Orkestra<p class="tool-description">A tool for managing Revit add-ins and scripts</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 2024.1.8.3</p>
+        </div>
+    </div>
+    
+    <!-- pyRevit -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">pyRevit<p class="tool-description">A tool for automating Revit tasks using Python scripts</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 4.8.16.24121</p>
+        </div>
+    </div>
+    
+    <!-- Rhino.Inside -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE modeling">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/rhinoinside-revit-what-are-you-doing-with-it-in-2024" target="_blank">Rhino.Inside</a><p class="tool-description">A tool for integrating Rhino and Grasshopper directly within Revit</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/ls/content/5591841586020352/departments/core-studio-1/core-modeling-1" tartget="_blank">CORE modeling</a></div>
+            <p><strong>Version:</strong> 1.21.8913</p>
+        </div>
+    </div>
+    
+    <!-- Content Catalog (Formerly UNIFI) -->
+    <div class="tool-card" data-tool-type="" data-install-type="Automatic" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name"><a href="https://spark.thorntontomasetti.com/home/unifi-content-management-system" target="_blank">Content Catalog (Formerly UNIFI)</a><p class="tool-description">A tool for managing Revit content libraries</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Automatic</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 3.10.2</p>
+        </div>
+    </div>
+    
+    <!-- The Wild (Being Depreciated Soon)-->
+    <div class="tool-card" style="background-color: #F3F3F3;" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">The Wild (Being Depreciated Soon)<p class="tool-description">A VR collaboration tool</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 1.7.5</p>
+        </div>
+    </div>
+    
+    <!-- XRev -->
+    <div class="tool-card" data-tool-type="" data-install-type="Optional" data-where-type="Software Center" data-managed-by="CORE design">
+        <div class="card-header">
+            <div class="tool-name">XRev<p class="tool-description">A tool for batch exporting Revit views and sheets</p></div>
+            <div class="chevron">˅</div>
+        </div>
+        <div class="card-body">
+            <div class="option-item"><strong>Install Type:</strong> Optional</div>
+            <div class="option-item"><strong>Where to Get:</strong> Software Center</div>
+            <div class="option-item"><strong>Managed By:</strong> <a href="https://spark.thorntontomasetti.com/home/departments/core-studio-1/digital-design" tartget="_blank">CORE design</a></div>
+            <p><strong>Version:</strong> 2.9.0</p>
+        </div>
+    </div>
+
+    
+</div>
+
+<script>
+/* script for dropdown arrows  */
+document.querySelectorAll('.chevron').forEach(arrow => {
+    arrow.addEventListener('click', () => {
+        const itemBox = arrow.closest('.tool-card');
+        itemBox.classList.toggle('active');
+    });
+});
+
+/* script for filtering and searching */        
+window.onload = function() {
+    const toolCards = document.querySelectorAll('.tool-card');
+    const installTypeFilter = document.getElementById('installTypeFilter');
+    const projectTypeFilter = document.getElementById('wheretogetTypeFilter');
+    const managedByFilter = document.getElementById('managedByFilter');
+    const searchBar = document.getElementById('searchBar');
+    const searchButton = document.getElementById('searchButton');
+    const clearSearchButton = document.getElementById('clearSearchButton');
+
+    // Populate dropdown options
+    const uniqueInstallTypes = new Set();
+    const uniqueProjectTypes = new Set();
+    const uniqueManagedBy = new Set();
+
+    toolCards.forEach(card => {
+        uniqueInstallTypes.add(card.getAttribute('data-install-type'));
+        uniqueProjectTypes.add(card.getAttribute('data-where-type'));
+        uniqueManagedBy.add(card.getAttribute('data-managed-by'));
+    });
+
+    function populateDropdown(dropdown, items) {
+        // Add unique items to the dropdown
+        items.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            dropdown.appendChild(option);
+        });
+    }
+
+    populateDropdown(installTypeFilter, uniqueInstallTypes);
+    populateDropdown(projectTypeFilter, uniqueProjectTypes);
+    populateDropdown(managedByFilter, uniqueManagedBy);
+
+    function filterTools() {
+        const selectedInstallType = installTypeFilter.value;
+        const selectedProjectType = projectTypeFilter.value;
+        const selectedManagedBy = managedByFilter.value;
+        const searchTerm = searchBar.value.toLowerCase();
+
+        toolCards.forEach(card => {
+            const installType = card.getAttribute('data-install-type');
+            const projectType = card.getAttribute('data-where-type');
+            const managedBy = card.getAttribute('data-managed-by');
+            const toolName = card.querySelector('.tool-name').textContent.toLowerCase();
+            const toolDescription = card.querySelector('.tool-description').textContent.toLowerCase();
+
+            const matchesSearch = toolName.includes(searchTerm) || toolDescription.includes(searchTerm);
+            const matchesFilter = (selectedInstallType === '' || installType === selectedInstallType) &&
+                                  (selectedProjectType === '' || projectType === selectedProjectType) &&
+                                  (selectedManagedBy === '' || managedBy === selectedManagedBy);
+
+            if (matchesSearch && matchesFilter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Add event listeners for filters
+    installTypeFilter.addEventListener('change', filterTools);
+    projectTypeFilter.addEventListener('change', filterTools);
+    managedByFilter.addEventListener('change', filterTools);
+
+    // Add event listeners for search
+    searchButton.addEventListener('click', filterTools);
+    searchBar.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            filterTools();
+        }
+    });
+    clearSearchButton.addEventListener('click', function () {
+        searchBar.value = '';
+        filterTools();  // Reapply the filter after clearing the search
+    });
+
+    // Initial filter to display all cards
+    filterTools();
+};
+
+</script>
+
